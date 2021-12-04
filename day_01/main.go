@@ -3,16 +3,12 @@ package main
 import (
     "bufio"
     "fmt"
-    "log"
-    "os"
-    "strconv"
+    
+	"../util"
 )
 
 func main() {
-	file, err := os.Open("input1.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+	file := util.RequireFile("input1.txt")
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
@@ -20,16 +16,13 @@ func main() {
 	var values []int
 
 	for scanner.Scan() {
-		value, err := strconv.Atoi(scanner.Text())
-		if err != nil {
-			log.Fatal(err)
-		}
+		value := util.RequireAtoI(scanner.Text())
 
 		values = append(values, value)
 	}
 
-	fmt.Println(countIncreasesSliding(values, 1))
-	fmt.Println(countIncreasesSliding(values, 3))
+	fmt.Println(countIncreases(values, 1))
+	fmt.Println(countIncreases(values, 3))
 }
 
 func countIncreases(values []int, windowSize int) int {

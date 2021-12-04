@@ -3,10 +3,9 @@ package main
 import (
     "bufio"
     "fmt"
-    "log"
-    "os"
-    "strconv"
 	"strings"
+
+	"../util"
 )
 
 type movement struct {
@@ -16,10 +15,7 @@ type movement struct {
 
 
 func main() {
-	file, err := os.Open("input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+	file := util.RequireFile("input.txt")
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
@@ -30,13 +26,9 @@ func main() {
 		input := strings.Split(scanner.Text(), " ")
 		
 		direction := input[0]
-		value, err := strconv.Atoi(input[1])
+		value := util.RequireAtoI(input[1])
 
 		movement := movement{direction, value}
-
-		if err != nil {
-			log.Fatal(err)
-		}
 
 		movements = append(movements, movement)
 	}
